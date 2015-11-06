@@ -1,0 +1,30 @@
+{
+  "name": "mrgrain/eloquent-service-injection",
+  "description": "Simple trait to inject services into Eloquent models via a property.",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Moritz Kornher",
+      "email": "mail@moritzkornher.de"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "php": ">=5.5.9",
+    "illuminate/support": "^5.1"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^5.0",
+    "illuminate/database": "^5.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Mrgrain\\EloquentServiceInjection\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Mrgrain\\EloquentServiceInjection\\Tests\\": "tests/"
+    }
+  }
+}
