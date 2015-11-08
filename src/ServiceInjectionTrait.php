@@ -61,11 +61,11 @@ trait ServiceInjectionTrait
         }
 
         // return previously injected service
-        if (isset($this->services[$key])) {
-            return $this->services[$key];
+        if (!isset($this->services[$key])) {
+            $this->setService($key, App::make($this->inject[$key]));
         }
 
-        return $this->setService($key, App::make($this->inject[$key]));
+        return $this->services[$key];
     }
 
     /**
