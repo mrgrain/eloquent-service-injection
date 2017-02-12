@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\App;
 
 /**
  * Class ServiceInjectionTrait
+ *
  * @property array inject
  * @package Mrgrain\EloquentServiceInjection
  */
@@ -12,6 +13,7 @@ trait ServiceInjectionTrait
 {
     /**
      * The injected services.
+     *
      * @var array
      */
     protected $services = [];
@@ -19,23 +21,28 @@ trait ServiceInjectionTrait
     /**
      * Overwrite the dynamic attribute getter.
      *
-     * @param  string  $key
+     * @param  string $key
+     *
      * @return mixed
      */
     public function __get($key)
     {
         try {
             return $this->getService($key);
-        } catch (ServiceInjectionException $e)  {
-            return parent::__get($key);
+        } catch (ServiceInjectionException $e) {
+            if (is_callable('parent::__get')) {
+                return parent::__get($key);
+            }
         }
+        return $this->{$key};
     }
 
     /**
      * Dynamically set attributes on the model.
      *
-     * @param  string  $key
-     * @param  mixed   $value
+     * @param  string $key
+     * @param  mixed  $value
+     *
      * @return void
      */
     public function __set($key, $value)
@@ -44,12 +51,22 @@ trait ServiceInjectionTrait
             $this->setService($key, $value);
             return;
         }
-        parent::__set($key, $value);
+
+        // parent is model
+        if (is_callable('parent::__set')) {
+            parent::__set($key, $value);
+            return;
+        }
+
+        // other objects
+        $this->{$key} = $value;
     }
 
     /**
      * Get a service, inject if needed.
+     *
      * @param $key
+     *
      * @return mixed
      * @throws ServiceInjectionException
      */
@@ -70,8 +87,10 @@ trait ServiceInjectionTrait
 
     /**
      * Set a service property to the array
+     *
      * @param $key
      * @param $value
+     *
      * @return bool
      */
     protected function setService($key, $value)
@@ -83,7 +102,9 @@ trait ServiceInjectionTrait
 
     /**
      * Is the given key a service
+     *
      * @param $key
+     *
      * @return bool
      */
     protected function isService($key)
