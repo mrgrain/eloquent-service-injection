@@ -65,4 +65,4 @@ First of all: Thank you for considering to contribute to this project. Without y
 
 - Be aware of the scope of the project, to avoid disappointment. 
 - Please add appropriate tests to all pull requests.
-- When interacting on this project, follow the [Code of Conduct](CODE_OF_CONDUCT).
+- When interacting on this project, follow the [Code of Conduct](CODE_OF_CONDUCT.md).
